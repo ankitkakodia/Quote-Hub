@@ -22,3 +22,11 @@ Quote analytics: Collect and analyze data on user interactions with the program,
 
 People can come and make signups and have their own quotes.
 Add a feature that allows user to add other name for the quote.
+
+WHen Login/Signup successfully.
+
+two options:
+1 New Quotes:
+required:- Category, Quote, author:- if not then user name will be author.
+2 View Quotes:
+required:- by Category, By Author 
