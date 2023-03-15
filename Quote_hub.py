@@ -1,5 +1,7 @@
 import pymysql
 import signup
+import add_quote
+import view_quotes
 
 host = "localhost"
 user = "root"
@@ -24,17 +26,34 @@ cur.execute(create)
 while True:
     user = (input("Please enter login/signup user: ")).lower()
     if (user == "login") or (user == "1"):
-        res = signup.login(cur)
-        if (res == True):
-            break
-        
+        user_logged_in, user_details = signup.login(cur)
+        if (user_logged_in == True):
+            # add_quote.add_quote(cur,user_details,conn)
+            break         
     elif (user == "signup") or (user == "2"):
         signup.signup(cur)
         conn.commit()
-        
     else:
         print("please enter correct input")
-    
+
+print("""
+    1. Add Quote
+    2. View Quote
+    """)
+
+while True:
+    action = input("Enter action: ")
+    if (action == "1"):
+        add_quote.add_quote(cur,user_details,conn)
+    elif (action == "2"):
+        view_quotes.view_quotes(cur)
+    elif (action == "0"):
+        print("Thanks")
+        break
+    else:
+        print("Invalid Action, Try Again!!!!")
+
+
 conn.close()
 
 
