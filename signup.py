@@ -1,16 +1,17 @@
 def login(cur):
-    username = input("Username: ")
-    password = input("Password: ")
-    select = f"select username, password from users where username = '{username}' and password = '{password}';"
-    cur.execute(select)
-    login = cur.fetchall()
-    # cur.close()
-    if (len(login) == 0):
-        print("Wrong Username/password or Please signup first!!")
-    else :
-        print("Login Successfully!!!")
-        return True
+    while True:
+        username = input("Username: ")
+        password = input("Password: ")
+        select = f"select username, password from users where username = '{username}' and password = '{password}';"
+        cur.execute(select)
+        user_details = cur.fetchall()
         
+        if (len(user_details) == 0):
+            print("Wrong Username/password or Please signup first!!")
+        else :
+            print("Login Successfully!!!")
+            return True, user_details
+            
 
 
 def signup(cur):
