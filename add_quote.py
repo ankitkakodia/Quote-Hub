@@ -8,10 +8,22 @@
 #     if (action == "1"):
 def add_quote(cur,user_details,conn):
     while True:
-        category = (input("Enter category: ")).title()
-        quote = input("Enter Quote: ")
-        author = input("Enter author: ").title()
-        # username = user_details[0][0]
+        while True:
+            print("Please choose category")
+            select = f"select * from categories;"
+            cur.execute(select)
+            all_cat = cur.fetchall()
+            all_cat_id = []
+            for id,cat in all_cat:
+                print(id,cat)
+                all_cat_id.append(id)
+                
+            category_id = int(input("Enter category_id: "))
+            if category_id not in all_cat_id:
+                print("Invalid category Id, please try again")
+            else: break
+        quote = input("Enter Quote: ").strip()
+        author = input("Enter author: ").title().strip()
         
 
         select = f"select id,first_name,last_name from users where username = '{user_details[0][0]}'"
@@ -22,9 +34,12 @@ def add_quote(cur,user_details,conn):
         if (author == ""): 
             author = user_full_name
                         
-        if (category == "") or (quote == ""):
+        if (category_id == "") or (quote == ""):
             print("Category or Quote can't be empty, please insert again!!!")             
         else:
+            select = f"select cat_name from categories where cat_id = {category_id} ;"
+            cur.execute(select)
+            category = cur.fetchall()[0][0]
             quote = conn.escape(quote)
             select = f"select quotes from quotes where quotes = {quote};"
             cur.execute(select)
