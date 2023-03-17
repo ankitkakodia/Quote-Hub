@@ -28,7 +28,7 @@ def signup(cur):
             insert = f"insert into users (first_name,last_name,password,username) values('{first_name}','{last_name}','{password}','{username}');"
             cur.execute(insert)
             print("Signup Successfully")
-            break
+            return True, username
         else :
             print("Username Already exists, please try again!!!")
              

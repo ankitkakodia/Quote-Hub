@@ -9,7 +9,7 @@
 def add_quote(cur,user_details,conn):
     while True:
         while True:
-            print("Please choose category")
+            print("Please choose category or Press 0 to go back:")
             select = f"select * from categories;"
             cur.execute(select)
             all_cat = cur.fetchall()
@@ -17,13 +17,17 @@ def add_quote(cur,user_details,conn):
             for id,cat in all_cat:
                 print(id,cat)
                 all_cat_id.append(id)
-                
+
             category_id = int(input("Enter category_id: "))
-            if category_id not in all_cat_id:
+            if (category_id == 0):
+                break
+            elif category_id not in all_cat_id:
                 print("Invalid category Id, please try again")
             else: break
-        quote = input("Enter Quote: ").strip()
-        author = input("Enter author: ").title().strip()
+        quote = input("Enter Quote or Press 0 to go back: ").strip()
+        author = input("Enter author or Press 0 to go back: ").title().strip()
+        if (category_id == "0") or (quote == "0") or (author == "0"):
+            break
         
 
         select = f"select id,first_name,last_name from users where username = '{user_details[0][0]}'"
