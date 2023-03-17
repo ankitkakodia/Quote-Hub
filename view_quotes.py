@@ -10,29 +10,41 @@ def view_quotes(cur):
     while True:
         print("1.Search by Category: Press 1\n2.Search by Author: Press 2\n3.Search by words: Press 3\nPress 0 for Exit")
         search = input("Search: ").strip()
-        
         if (search == "0"):
             break
-        
-
         elif (search == "1"):
             while True:
-                category = input("Enter Category or Press 0 to go Back: ").strip()
-                select = f"select quotes, author from quotes where category like '%{category}%';"
+                print("Please choose category or Press 0 to go back:")
+                select = f"select * from categories;"
                 cur.execute(select)
-                quotes_by_cat = cur.fetchall()
-                count = 0
-                
-                if (category == "0"):
+                all_cat = cur.fetchall()
+                all_cat_id = []
+                for id,cat in all_cat:
+                    print(id,cat)
+                    all_cat_id.append(id)
+                category_id = int(input("Enter category_id: "))
+                if (category_id == "0"):
                     break
-                elif (len(quotes_by_cat)==0):
-                    print("Category not found, Please enter correct category")
+                elif category_id not in all_cat_id:
+                    print("Invalid category Id, please try again")
                 else:
-                    for quote in quotes_by_cat:
-                        count += 1
-                        print(f"{count}.{quote[0]}\n{' '*len(quote[0])}-by {quote[1].title()}")
-                    break
-            
+                    select = f"select cat_name from categories where cat_id = {category_id};"
+                    cur.execute(select)
+                    category = cur.fetchall()[0][0]
+                # category = input("Enter Category or Press 0 to go Back: ").strip()
+                    select = f"select quotes, author from quotes where category like '%{category}%';"
+                    cur.execute(select)
+                    quotes_by_cat = cur.fetchall()
+                    count = 0
+                    if (len(quotes_by_cat)==0):
+                        print(f"No Result found for {category}")
+                        break
+                    else:
+                        for quote in quotes_by_cat:
+                            count += 1
+                            print(f"{count}.{quote[0]}\n{' '*len(quote[0])}-by {quote[1].title()}")
+                        break
+                    
         elif (search == "2"):
             while True:
                 author = input("Enter Author or Press 0 to go Back: ").strip()

@@ -27,21 +27,25 @@ while True:
     user = (input("Please enter login/signup user: ")).lower()
     if (user == "login") or (user == "1"):
         user_logged_in, user_details = signup.login(cur)
+        username = user_details[0][0]
         if (user_logged_in == True):
             # add_quote.add_quote(cur,user_details,conn)
             break         
     elif (user == "signup") or (user == "2"):
-        signup.signup(cur)
+        signup_complete, user_details = signup.signup(cur)
         conn.commit()
+        if (signup_complete == True):
+            break
     else:
         print("please enter correct input")
 
-print("""
+while True:
+    print(user_details)
+    print("""
     1. Add Quote
     2. View Quote
+    3. Edit Quote
     """)
-
-while True:
     action = input("Enter action: ")
     if (action == "1"):
         add_quote.add_quote(cur,user_details,conn)
