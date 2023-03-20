@@ -2,11 +2,8 @@ import pymysql
 import signup
 import add_quote
 import view_quotes
+from settings import *
 
-host = "localhost"
-user = "root"
-password = "1234"
-database = "quotes"
 
 conn = pymysql.connect(host=host, user=user, password=password, database=database)
 cur = conn.cursor()
