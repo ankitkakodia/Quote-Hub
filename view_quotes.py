@@ -28,16 +28,16 @@ def view_quotes(cur):
                 elif category_id not in all_cat_id:
                     print("Invalid category Id, please try again")
                 else:
-                    select = f"select cat_name from categories where cat_id = {category_id};"
-                    cur.execute(select)
-                    category = cur.fetchall()[0][0]
+                    # select = f"select cat_name from categories where cat_id = {category_id};"
+                    # cur.execute(select)
+                    # category = cur.fetchall()[0][0]
                 # category = input("Enter Category or Press 0 to go Back: ").strip()
-                    select = f"select quotes, author from quotes where category like '%{category}%';"
+                    select = f"select quotes, author from quotes where category_id = {category_id};"
                     cur.execute(select)
                     quotes_by_cat = cur.fetchall()
                     count = 0
                     if (len(quotes_by_cat)==0):
-                        print(f"No Result found for {category}")
+                        print(f"No Result found for {category_id}")
                         break
                     else:
                         for quote in quotes_by_cat:

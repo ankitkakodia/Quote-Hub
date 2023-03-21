@@ -14,12 +14,6 @@ Welcome to Quote-Hub
 2. signup
 """)
 
-create = f"create table if not exists users (id tinyint auto_increment primary key, first_name varchar(15) not null, last_name varchar(15) not null, password varchar(15) not null, username varchar(15) unique);"
-cur.execute(create)
-create = f"create table if not exists quotes (id tinyint auto_increment not null primary key, user_id tinyint, category varchar(50) not null , quotes varchar(255) unique , author varchar(20));"
-cur.execute(create)
-
-
 while True:
     user = (input("Please enter login/signup user: ")).lower()
     if (user == "login") or (user == "1"):
@@ -37,7 +31,6 @@ while True:
         print("please enter correct input")
 
 while True:
-    print(user_details)
     print("""
     1. Add Quote
     2. View Quote

@@ -25,11 +25,12 @@ def add_quote(cur,user_details,conn):
                 print("Invalid category Id, please try again")
             else: break
         quote = input("Enter Quote or Press 0 to go back: ").strip()
+        if (quote == "0"):
+            break
         author = input("Enter author or Press 0 to go back: ").title().strip()
-        if (category_id == "0") or (quote == "0") or (author == "0"):
+        if (author == "0"):
             break
         
-
         select = f"select id,first_name,last_name from users where username = '{user_details[0][0]}'"
         cur.execute(select)
         out = cur.fetchall()
@@ -41,16 +42,13 @@ def add_quote(cur,user_details,conn):
         if (category_id == "") or (quote == ""):
             print("Category or Quote can't be empty, please insert again!!!")             
         else:
-            select = f"select cat_name from categories where cat_id = {category_id} ;"
-            cur.execute(select)
-            category = cur.fetchall()[0][0]
             quote = conn.escape(quote)
             select = f"select quotes from quotes where quotes = {quote};"
             cur.execute(select)
             quotes = cur.fetchall()
 
             if (len(quotes) ==0):
-                insert = f"insert into quotes (category, quotes, user_id, author) values ('{category}', {quote},{user_id},'{author}');"
+                insert = f"insert into quotes (category_id, quotes, user_id, author) values ('{category_id}', {quote},{user_id},'{author}');"
                 cur.execute(insert)
                 conn.commit()
                 print("Quote Added Successfully")
