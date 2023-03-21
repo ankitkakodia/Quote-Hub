@@ -18,7 +18,7 @@ cur.execute(f"""use {database};""")
 
 
 
-create = f"create table if not exists users (id int auto_increment primary key, first_name varchar(15) not null, last_name varchar(15) not null, password varchar(15) not null, username varchar(15) unique);"
+create = f"create table if not exists users (id int auto_increment primary key, first_name varchar(15) not null, last_name varchar(15) not null, password varchar(128) not null, username varchar(15) unique);"
 cur.execute(create)
 create = f"create table if not exists categories(cat_id int auto_increment primary key, cat_name varchar(50));"
 cur.execute(create)

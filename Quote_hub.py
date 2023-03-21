@@ -14,23 +14,34 @@ Welcome to Quote-Hub
 2. signup
 """)
 
-while True:
-    user = (input("Please enter login/signup user: ")).lower()
-    if (user == "login") or (user == "1"):
-        user_logged_in, user_details = signup.login(cur)
+# while True:
+user = (input("Please enter login/signup user: ")).lower()
+if (user == "login") or (user == "1"):
+    result = signup.login(cur)
+    if(result): 
+        user_logged_in, user_details = result
         username = user_details[0][0]
-        if (user_logged_in == True):
-            # add_quote.add_quote(cur,user_details,conn)
-            break         
-    elif (user == "signup") or (user == "2"):
-        signup_complete, user_details = signup.signup(cur)
-        conn.commit()
-        if (signup_complete == True):
-            break
     else:
-        print("please enter correct input")
+        print('Wrong username/password!')
+        username = None
+    
+    # if (user_logged_in == True):
+        # add_quote.add_quote(cur,user_details,conn)
+       
+elif (user == "signup") or (user == "2"):
+    result = signup.signup(cur)
+    if(result):
+        conn.commit()
+        signup_complete, user_details = result
+        username = user_details[0][0]
+    else: 
+        print('User already exists!')
+    
+    # if (signup_complete == True):
+else:
+    print("please enter correct input")
 
-while True:
+if username:
     print("""
     1. Add Quote
     2. View Quote
@@ -43,7 +54,7 @@ while True:
         view_quotes.view_quotes(cur)
     elif (action == "0"):
         print("Thanks")
-        break
+        # break
     else:
         print("Invalid Action, Try Again!!!!")
 
