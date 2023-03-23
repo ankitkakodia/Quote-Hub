@@ -36,6 +36,7 @@ elif (user == "signup") or (user == "2"):
         username = user_details[0][0]
     else: 
         print('User already exists!')
+        username = None
     
     # if (signup_complete == True):
 else:
